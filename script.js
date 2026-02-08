@@ -1,4 +1,4 @@
-const API = "YOUR_API_URL";
+const API = "https://script.google.com/macros/s/AKfycbygv4HB8OMBzTWhO18eEjNK9aRf1LWtiTlt4Lm7RPP7hBjfVHfEgng_evrF3NpXGBMnrw/exec";
 
 function login() {
   const acc = document.getElementById("acc").value;
