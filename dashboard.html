@@ -1,249 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Mini Bank</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <i class="fas fa-university"></i>
-                <div class="brand-text">
-                    <h1>Mini Bank</h1>
-                    <p class="brand-subtitle">Customer Portal</p>
-                </div>
-            </div>
 
-            <div class="nav-user">
-                <div class="user-avatar">
-                    <i class="fas fa-user-circle"></i>
-                </div>
-                <div class="user-info">
-                    <span class="user-name" id="userName">Loading...</span>
-                    <span class="user-account" id="userAccount">Account: --</span>
-                </div>
-                <button id="logoutBtn" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </div>
-        </div>
-    </nav>
+<div class="navbar">
+  <div class="brand">Mini Bank</div>
+  <button onclick="logout()">Logout</button>
+</div>
 
-    <!-- Main Dashboard Content -->
-    <main class="dashboard-container">
-        <!-- Loading Overlay -->
-        <div id="loadingOverlay" class="loading-overlay">
-            <div class="loading-spinner"></div>
-            <p>Loading your account information...</p>
-        </div>
+<div class="content">
+  <div class="card info-card">
+    <h3 id="name"></h3>
+    <p><strong>Acc:</strong> <span id="account"></span></p>
+    <p><strong>Mobile:</strong> <span id="mobile"></span></p>
+  </div>
 
-        <!-- Balance Section -->
-        <section class="balance-section">
-            <div class="container">
-                <div class="balance-card">
-                    <div class="balance-header">
-                        <h2><i class="fas fa-wallet"></i> Account Balance</h2>
-                        <span class="balance-updated">Updated just now</span>
-                    </div>
-                    <div class="balance-amount">
-                        <p class="balance-label">Available Balance</p>
-                        <h1 id="balanceAmount" class="balance-number">₹ --</h1>
-                    </div>
-                    <div class="balance-footer">
-                        <div class="balance-stats">
-                            <div class="stat">
-                                <span class="stat-label">Account Type</span>
-                                <span class="stat-value" id="accountType">Savings</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Interest Rate</span>
-                                <span class="stat-value">3.5% p.a.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <div class="card balance-card">
+    <h3>Balance</h3>
+    <div class="amount">₹<span id="balance"></span></div>
+  </div>
 
-        <!-- Dashboard Content -->
-        <div class="dashboard-content">
-            <div class="container">
-                <div class="dashboard-grid">
-                    <!-- Left Column: Customer Info -->
-                    <div class="dashboard-column">
-                        <div class="card customer-card">
-                            <div class="card-header">
-                                <h3><i class="fas fa-user-tie"></i> Customer Information</h3>
-                                <button class="card-action">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <i class="fas fa-user"></i> Full Name
-                                    </div>
-                                    <div class="info-value" id="customerName">Loading...</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <i class="fas fa-id-card"></i> Account Number
-                                    </div>
-                                    <div class="info-value" id="customerAccount">--</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <i class="fas fa-phone"></i> Mobile Number
-                                    </div>
-                                    <div class="info-value" id="customerMobile">--</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <i class="fas fa-envelope"></i> Email Address
-                                    </div>
-                                    <div class="info-value" id="customerEmail">--</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <i class="fas fa-map-marker-alt"></i> Branch
-                                    </div>
-                                    <div class="info-value">Main Street, Mumbai</div>
-                                </div>
-                            </div>
-                        </div>
+  <div class="card tx-card">
+    <h3>Transactions</h3>
+    <table>
+      <thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
+      <tbody id="tx"></tbody>
+    </table>
+  </div>
+</div>
 
-                        <!-- Quick Actions Card -->
-                        <div class="card quick-actions">
-                            <div class="card-header">
-                                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="action-grid">
-                                    <button class="action-btn">
-                                        <i class="fas fa-exchange-alt"></i>
-                                        <span>Fund Transfer</span>
-                                    </button>
-                                    <button class="action-btn">
-                                        <i class="fas fa-mobile-alt"></i>
-                                        <span>Mobile Recharge</span>
-                                    </button>
-                                    <button class="action-btn">
-                                        <i class="fas fa-file-invoice"></i>
-                                        <span>View Statements</span>
-                                    </button>
-                                    <button class="action-btn">
-                                        <i class="fas fa-credit-card"></i>
-                                        <span>Card Services</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Transactions -->
-                    <div class="dashboard-column">
-                        <div class="card transactions-card">
-                            <div class="card-header">
-                                <h3><i class="fas fa-history"></i> Recent Transactions</h3>
-                                <button class="card-action">
-                                    <i class="fas fa-download"></i> Export
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <!-- Transaction Filters -->
-                                <div class="transaction-filters">
-                                    <div class="filter-group">
-                                        <label>Show:</label>
-                                        <select id="transactionFilter" class="filter-select">
-                                            <option value="all">All Transactions</option>
-                                            <option value="credit">Credits Only</option>
-                                            <option value="debit">Debits Only</option>
-                                            <option value="last7">Last 7 Days</option>
-                                        </select>
-                                    </div>
-                                    <div class="transaction-summary">
-                                        <span class="summary-label">Total Count:</span>
-                                        <span id="transactionCount" class="summary-value">0</span>
-                                    </div>
-                                </div>
-
-                                <!-- Transactions Table -->
-                                <div class="transactions-table-container">
-                                    <table class="transactions-table" id="transactionsTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Description</th>
-                                                <th>Reference No.</th>
-                                                <th class="amount-col">Amount</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="transactionsBody">
-                                            <!-- Transactions will be loaded here -->
-                                        </tbody>
-                                    </table>
-                                    
-                                    <!-- Empty State -->
-                                    <div id="emptyState" class="empty-state">
-                                        <i class="fas fa-exchange-alt"></i>
-                                        <h4>No Transactions Found</h4>
-                                        <p>Your transaction history will appear here</p>
-                                    </div>
-
-                                    <!-- Loading State -->
-                                    <div id="transactionsLoading" class="loading-state">
-                                        <div class="loading-spinner small"></div>
-                                        <p>Loading transactions...</p>
-                                    </div>
-                                </div>
-
-                                <!-- View All Button -->
-                                <div class="view-all-container">
-                                    <button class="view-all-btn" id="viewAllBtn">
-                                        View All Transactions
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="dashboard-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4><i class="fas fa-shield-alt"></i> Security Tips</h4>
-                    <p>Never share your password or OTP with anyone.</p>
-                    <p>Log out after completing your banking session.</p>
-                </div>
-                <div class="footer-section">
-                    <h4><i class="fas fa-headset"></i> Customer Support</h4>
-                    <p>24/7 Helpline: 1800-123-4567</p>
-                    <p>Email: support@minibank.com</p>
-                </div>
-                <div class="footer-section">
-                    <p class="copyright">© 2023 Mini Bank. All rights reserved.</p>
-                    <div class="footer-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">FAQ</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
